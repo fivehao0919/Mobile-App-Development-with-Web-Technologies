@@ -114,12 +114,13 @@ angular.module('conFusion.controllers', [])
             $scope.toggleDetails = function () {
                 $scope.showDetails = !$scope.showDetails;
 
-                $scope.addFavorite = function (index) {
-                    console.log("index is " + index);
-                    favoriteFactory.addToFavorites(index);
-                    $ionicListDelegate.closeOptionButtons();
-                };
             };
+        };
+
+        $scope.addFavorite = function (index) {
+            console.log("index is " + index);
+            favoriteFactory.addToFavorites(index);
+            $ionicListDelegate.closeOptionButtons();
         };
     }])
 
@@ -154,7 +155,7 @@ angular.module('conFusion.controllers', [])
         };
     }])
 
-    .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', 'baseURL', function ($scope, $stateParams, menuFactory, baseURL) {
+    .controller('DishDetailController', ['$scope', '$stateParams', '$ionicModal', 'favoriteFactory', 'menuFactory', '$ionicPopover', 'baseURL', function ($scope, $stateParams, $ionicModal, favoriteFactory, menuFactory, $ionicPopover, baseURL) {
 
         $scope.baseURL = baseURL;
         $scope.dish = {};
@@ -172,6 +173,70 @@ angular.module('conFusion.controllers', [])
                 }
             );
 
+        // .fromTemplateUrl() method
+
+        $ionicPopover.fromTemplateUrl('templates/dish-detail-popover.html', {
+          scope: $scope
+        }).then(function(popover) {
+          $scope.popover = popover;
+        })
+        $scope.openPopover = function($event) {
+          $scope.popover.show($event);
+        };
+
+        $scope.closePopover = function() {
+          $scope.popover.hide();
+        };
+
+        $scope.addFavorite = function () {
+            console.log("index is " + $scope.dish.id);
+            favoriteFactory.addToFavorites($scope.dish.id);
+            $scope.closePopover();
+        };
+
+
+        // comment modal
+        $ionicModal.fromTemplateUrl('templates/dish-comment.html', {
+            scope: $scope
+        }).then(function (modal) {
+            $scope.modal = modal;
+        });
+
+        // Triggered in the login modal to close it
+        $scope.closeComment = function () {
+            $scope.modal.hide();
+        };
+
+        // Open the login modal
+        $scope.openComment = function () {
+            $scope.modal.show();
+        };
+
+//        // Perform the login action when the user submits the login form
+//        $scope.doComment = function () {
+//            console.log('Doing Comment', $scope.mycomment);
+//
+//            // Simulate a login delay. Remove this and replace with your login
+//            // code if using a login system
+//            /* $timeout(function () {
+//                $scope.closeComment();
+//            }, 1000); */
+//        };
+
+
+        // comment
+        $scope.mycomment = {rating: 5, comment: "", author: "", date: ""};
+
+        $scope.submitComment = function () {
+
+            $scope.mycomment.date = new Date().toISOString();
+            console.log($scope.mycomment);
+
+            $scope.dish.comments.push($scope.mycomment);
+            menuFactory.getDishes().update({id: $scope.dish.id}, $scope.dish);
+            $scope.closeComment();
+            $scope.closePopover();
+        }
 
     }])
 

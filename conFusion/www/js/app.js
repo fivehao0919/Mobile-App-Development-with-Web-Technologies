@@ -89,7 +89,7 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers', 'conFusion.servic
                 views: {
                     'mainContent': {
                         templateUrl: 'templates/favorites.html',
-                        controller: 'FavoritesController'
+                        controller:'FavoritesController'
                     }
                 }
             });
