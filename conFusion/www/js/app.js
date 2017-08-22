@@ -8,7 +8,7 @@
 'use strict';
 angular.module('conFusion', ['ionic', 'conFusion.controllers', 'conFusion.services'])
 
-    .run(function ($ionicPlatform, $rootScope, $ionicLoading) {
+    .run(function ($ionicPlatform, $rootScope, $ionicLoading, $localStorage) {
 
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
