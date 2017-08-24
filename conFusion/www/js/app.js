@@ -6,9 +6,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 'use strict';
-angular.module('conFusion', ['ionic', 'conFusion.controllers', 'conFusion.services'])
+angular.module('conFusion', ['ionic', 'ngCordova', 'conFusion.controllers', 'conFusion.services'])
 
-    .run(function ($ionicPlatform, $rootScope, $ionicLoading, $localStorage) {
+    .run(function ($ionicPlatform, $rootScope, $ionicLoading, $cordovaSplashscreen, $timeout) {
 
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -22,6 +22,11 @@ angular.module('conFusion', ['ionic', 'conFusion.controllers', 'conFusion.servic
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+
+            $timeout(function () {
+                $cordovaSplashscreen.hide();
+            }, 2000);
+
         });
 
         $rootScope.$on('loading:show', function () {
