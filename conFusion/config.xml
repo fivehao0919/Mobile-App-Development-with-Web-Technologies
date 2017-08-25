@@ -90,4 +90,5 @@
     <plugin name="cordova-plugin-x-toast" spec="git+https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="~0.8.5" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="cordova-plugin-image-picker" spec="https://github.com/wymsee/cordova-imagePicker.git" />
 </widget>
