@@ -102,7 +102,7 @@ angular.module('conFusion.controllers', [])
         };
 
         $ionicPlatform.ready(function () {
-            var options = {
+            var takePicture_options = {
                 quality: 50,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.CAMERA,
@@ -114,7 +114,7 @@ angular.module('conFusion.controllers', [])
                 saveToPhotoAlbum: false
             };
             $scope.takePicture = function () {
-                $cordovaCamera.getPicture(options)
+                $cordovaCamera.getPicture(takePicture_options)
                 .then(function(imageData) {
                     $scope.registration.imgSrc = "data:image/jpeg;base64," + imageData;
                 }, function(err) {
@@ -124,19 +124,16 @@ angular.module('conFusion.controllers', [])
                 $scope.registerform.show();
             };
 
-            var options = {
-                maximumImagesCount: 10,
+            var gallery_options = {
+                maximumImagesCount: 1,
                 width: 100,
                 height: 100,
                 quality: 50
             };
-
             $scope.gallery = function () {
-                $cordovaImagePicker.getPictures(options)
+                $cordovaImagePicker.getPictures(gallery_options)
                 .then(function (results) {
-                        for (var i = 0; i < results.length; i++) {
-                            console.log('Image URI: ' + results[i]);
-                        }
+                    $scope.registration.imgSrc = results[0];
                 }, function(error) {
                     // error getting photos
                 });
